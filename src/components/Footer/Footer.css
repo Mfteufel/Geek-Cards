@@ -1,0 +1,155 @@
+/* Estilos principales del footer */
+.footer {
+  background-color: #1a1a1a; /* Fondo oscuro que coincide con el tema */
+  color: #ffffff;
+  padding: 2rem 0;
+  margin-top: auto; /* Asegura que el footer esté al final de la página */
+}
+
+/* Contenedor principal del footer */
+.footer-content {
+  max-width: 1200px; /* Limita el ancho máximo para pantallas grandes */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Estilos comunes para las secciones del footer */
+.footer-section {
+  margin: 1rem;
+}
+
+/* Estilos para las secciones laterales */
+.footer-left, .footer-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 4rem;
+  min-width: 250px; /* Asegura un ancho mínimo para los contenedores laterales */
+}
+
+/* Sección central con bordes separadores */
+.footer-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  border-left: 1px solid #333; /* Separador visual */
+  border-right: 1px solid #333;
+  padding: 0 2rem;
+  min-width: 400px;
+  max-width: 500px;
+}
+
+/* Navegación en el footer */
+.footer-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem; /* Espacio entre enlaces */
+}
+
+/* Estilos para los enlaces de navegación */
+.footer-link {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Transición suave para el hover */
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+}
+
+/* Efecto hover para los enlaces */
+.footer-link:hover {
+  color: #646cff; /* Color de acento para hover */
+}
+
+/* Estilos para los títulos de las secciones */
+.footer-section h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Estilos generales para enlaces en las secciones */
+.footer-section a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Efecto hover para los enlaces */
+.footer-section a:hover {
+  color: #646cff; /* Color de acento para hover */
+}
+
+/* Contenedor de iconos de redes sociales */
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Estilos para los iconos de redes sociales */
+.social-link {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover para iconos de redes sociales */
+.social-link:hover {
+  transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
+}
+
+/* Sección inferior del footer con copyright */
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+/* Texto de copyright */
+.footer-bottom p {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Media Queries para diseño responsive */
+@media (max-width: 968px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .footer-center {
+    flex-direction: column;
+    gap: 2rem;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #333; /* Cambia los bordes laterales por horizontales en móvil */
+    border-bottom: 1px solid #333;
+    padding: 2rem 0;
+    margin: 1rem 0;
+  }
+
+  .footer-nav {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-left, .footer-right {
+    width: auto;
+    margin: 0;
+  }
+}

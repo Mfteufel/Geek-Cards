@@ -1,0 +1,81 @@
+.ventas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.venta-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 224, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.venta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 224, 255, 0.2);
+}
+
+.venta-imagen {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+.venta-info {
+    padding: 15px;
+}
+
+.venta-info h5 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.venta-precio {
+    font-size: 1.2rem;
+    color: #00E0FF;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.venta-estado {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+.venta-estado.en-curso {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.venta-estado.vendida {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.venta-fecha {
+    color: #9E9E9E;
+    font-size: 0.9rem;
+    margin: 5px 0 0 0;
+}
+
+@media (max-width: 768px) {
+    .ventas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .ventas-grid {
+        grid-template-columns: 1fr;
+    }
+}

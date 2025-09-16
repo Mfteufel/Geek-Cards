@@ -1,0 +1,174 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('path/to/fonts/roboto-regular.woff2') format('woff2'),
+       url('path/to/fonts/roboto-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+header {
+  background: #0A0A0A;
+  color: #fff;
+  padding: 24px 0;
+  text-align: left;
+  box-shadow: 0 10px 8px rgba(0,0,0,0.08);
+  font-family: 'Roboto', sans-serif;
+  margin-left: 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0 0 12px 0;
+  margin-left: 10px;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+}
+
+.opciones {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 18px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.opciones:hover {
+  color: #4ecdc4;
+}
+
+.opciones.active {
+  color: #4ecdc4;
+  border-bottom: 2px solid #4ecdc4;
+  padding-bottom: 5px;
+}
+
+.logo-link {
+  text-decoration: none;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-btn {
+  background: #00E0FF;
+  color: #0A0A0A;
+  border: 2px solid #00E0FF;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.profile-btn:hover {
+  background: #0A0A0A;
+  color: #00E0FF;
+  transform: translateY(-1px);
+}
+
+.user-name {
+  color: #4ecdc4;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.logout-btn {
+  background: transparent;
+  color: #ff6b9d;
+  border: 2px solid #ff6b9d;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+  background: #ff6b9d;
+  color: #ffffff;
+}
+
+img.logo {
+  height: 2cm;
+  border-radius: 100px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+}
+
+a.cart{
+  font-size: 20px;
+  color: #fff;
+  margin-right: 15px;
+}
+
+.login-buttons {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.login-buttons button {
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-left: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.register-btn {
+  background-color: #0A0A0A;
+  border: 2px solid #782083;
+  color: #782083;
+}
+
+.login-btn {
+  border: 2px solid #782083;
+  background-color: #782083;
+  color: #ffffff;
+}
+
+.register-btn:hover, .login-btn:hover {
+  background-color: #ffffff;
+  color: #782083;
+}
+a.cart {
+  position: relative;          
+  display: inline-flex;
+  align-items: center;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #782083;         
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  font-weight: 700;
+  pointer-events: none;   
+}
+.auth-container a.cart,
+.register-container a.cart,
+.auth-container .cart-badge,
+.register-container .cart-badge {
+  display: none !important;
+}

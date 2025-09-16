@@ -1,0 +1,178 @@
+/* Estilos específicos para la página MiCuenta */
+.cuenta-container {
+  max-width: 1200px;
+  margin: 48px auto;
+  background: rgba(10,10,10,0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(10,10,10,0.18);
+  padding: 40px 32px;
+  color: #FFF;
+  min-height: 60vh;
+}
+
+.cuenta-container h2 {
+  color: #00E0FF;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px #0A0A0A;
+}
+
+.cuenta-perfil {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.cuenta-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #00E0FF;
+  background: #FFF;
+  box-shadow: 0 2px 12px #0A0A0A;
+}
+
+.cuenta-perfil h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+  color: #FFF;
+}
+
+.cuenta-perfil p {
+  margin: 0 0 12px 0;
+  color: #9E9E9E;
+}
+
+.cuenta-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cuenta-editar {
+  background: #FF2DAC;
+  color: #FFF;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px #0A0A0A;
+}
+
+.cuenta-editar:hover {
+  background: #00E0FF;
+  color: #0A0A0A;
+  transform: translateY(-1px);
+}
+
+.cuenta-logout {
+  background: #dc3545;
+  color: #FFF;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px #0A0A0A;
+}
+
+.cuenta-logout:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.cuenta-compras, .cuenta-ventas, .cuenta-calificaciones {
+  margin-bottom: 28px;
+}
+
+.cuenta-compras h4, .cuenta-ventas h4, .cuenta-calificaciones h4 {
+  color: #FF2DAC;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 4px #0A0A0A;
+}
+
+.cuenta-compras ul, .cuenta-ventas ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cuenta-compras li, .cuenta-ventas li {
+  background: #14232a;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 4px rgba(10,10,10,0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #FFF;
+  transition: background 0.2s;
+}
+
+.cuenta-compras li:hover, .cuenta-ventas li:hover {
+  background: #1a2d36;
+}
+
+.cuenta-compras span, .cuenta-ventas span {
+  color: #9E9E9E;
+  font-size: 0.95em;
+}
+
+.cuenta-loading, .cuenta-error {
+  text-align: center;
+  color: #FF2DAC;
+  font-size: 1.2rem;
+  margin: 40px 0;
+  padding: 20px;
+  background: rgba(10,10,10,0.85);
+  border-radius: 12px;
+}
+
+.cuenta-error {
+  color: #FF2DAC;
+}
+
+.cuenta-calificaciones p {
+  color: #FFF;
+  font-size: 1.1rem;
+  margin: 0;
+  background: #14232a;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(10,10,10,0.12);
+}
+
+.cuenta-calificaciones strong {
+  color: #00E0FF;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cuenta-container {
+    margin: 24px auto;
+    padding: 24px 20px;
+  }
+  
+  .cuenta-perfil {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .cuenta-actions {
+    justify-content: center;
+  }
+  
+  .cuenta-compras li, .cuenta-ventas li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

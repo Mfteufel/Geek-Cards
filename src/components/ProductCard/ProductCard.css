@@ -1,0 +1,79 @@
+body {
+  text-align: center;
+  background: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+}
+
+.product-card {
+  display: inline-block;
+  vertical-align: top;
+  background: #052b6567;
+  color: #333333;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  width: 220px;
+  margin: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  background-color: #28477767;
+  box-shadow: 10px 6px 16px rgba(211, 0, 193, 0.541);
+  border-style: solid;
+  border-color: #D300C1;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 10px 0;
+}
+
+.card-type {
+  font-size: 0.9rem;
+  color: #ffffff;
+  margin: 5px 0;
+}
+
+.card-rarity {
+  font-size: 0.9rem;
+  color: #782083;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.card-price {
+  color: #00BFFF; /* celeste neón */
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.card-button {
+  background: #FF2DAC; /* rosa neón */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.card-button:hover {
+  background: #e6008f;
+  transform: scale(1.05);
+}
