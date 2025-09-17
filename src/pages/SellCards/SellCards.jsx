@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './SellCards.css';
 
+const DEFAULT_CATEGORIES = ['Juegos', 'Coleccionables', 'Figuras', 'Otros'];
+const TIPOS = ['Criatura', 'Hechizo', 'Equipo', 'Consumible'];
+const RAREZAS = ['Comun', 'Rara', 'Epica', 'Legendaria'];
+
 const SellCards = () => {
-    const [cardImage, setCardImage] = useState(null);
+    const [images, setImages] = useState([]); // array of base64 strings
     const [price, setPrice] = useState('');
     const [cardName, setCardName] = useState('');
+    const [description, setDescription] = useState('');
+    const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
+    const [tipo, setTipo] = useState(TIPOS[0]);
+    const [rareza, setRareza] = useState(RAREZAS[0]);
+    const [stock, setStock] = useState(1);
     const [activeListings, setActiveListings] = useState([]);
-    const [previewUrl, setPreviewUrl] = useState(null);
 
-    // Cargar las ventas activas al iniciar el componente
     useEffect(() => {
         loadActiveListings();
     }, []);
@@ -17,8 +24,14 @@ const SellCards = () => {
         const savedListings = localStorage.getItem('activeListings');
         if (savedListings) {
             try {
-                const parsedListings = JSON.parse(savedListings);
+                let parsedListings = JSON.parse(savedListings);
+                // Migrar datos antiguos: si solo tienen 'image', convertir a 'images'
+                parsedListings = parsedListings.map(l => ({
+                    ...l,
+                    images: l.images ? l.images : l.image ? [l.image] : [],
+                }));
                 setActiveListings(parsedListings);
+                localStorage.setItem('activeListings', JSON.stringify(parsedListings));
             } catch (error) {
                 console.error('Error loading listings:', error);
                 localStorage.setItem('activeListings', JSON.stringify([]));
@@ -34,85 +47,120 @@ const SellCards = () => {
         }
     };
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setCardImage(file);
-            // Convertir la imagen a base64 para poder guardarla en localStorage
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
+    const handleImagesUpload = (e) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+
+        // Read all files as base64 and append to images
+        const readers = files.map(file => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        });
+
+        Promise.all(readers)
+            .then(results => setImages(prev => [...prev, ...results]))
+            .catch(err => console.error('Error reading images', err));
+    };
+
+    const removeImageAt = (index) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        if (!previewUrl || !cardName || !price) {
-            alert('Por favor, complete todos los campos');
+
+        if (!images.length || !cardName || !price || !category) {
+            alert('Por favor complete: imagen(es), nombre, precio y categoría');
             return;
         }
 
-        // Create new listing
         const newListing = {
             id: Date.now(),
-            image: previewUrl,
+            images,
             name: cardName,
             price: parseFloat(price),
+            description,
+            category,
+            tipo,
+            rareza,
+            stock: Number(stock) || 0,
             date: new Date().toLocaleDateString()
         };
 
-        // Obtener las ventas actuales y agregar la nueva
         const currentListings = JSON.parse(localStorage.getItem('activeListings') || '[]');
         const updatedListings = [...currentListings, newListing];
-        
-        // Guardar en localStorage y actualizar el estado
+
         saveActiveListings(updatedListings);
         setActiveListings(updatedListings);
 
-        // Reset form
-        setCardImage(null);
-        setPreviewUrl(null);
+        // reset form
+        setImages([]);
         setPrice('');
         setCardName('');
+        setDescription('');
+        setCategory(DEFAULT_CATEGORIES[0]);
+        setTipo(TIPOS[0]);
+        setRareza(RAREZAS[0]);
+        setStock(1);
+    };
+
+    const deleteListing = (id) => {
+        const updated = activeListings.filter(l => l.id !== id);
+        saveActiveListings(updated);
+        setActiveListings(updated);
+    };
+
+    const changeStock = (id, delta) => {
+        const updated = activeListings.map(l => {
+            if (l.id !== id) return l;
+            const newStock = Math.max(0, (Number(l.stock) || 0) + delta);
+            return { ...l, stock: newStock };
+        });
+        saveActiveListings(updated);
+        setActiveListings(updated);
     };
 
     return (
         <div className="sell-cards-container">
             <h1>Vender Cartas</h1>
-            
+
             <div className="sell-cards-content">
                 <form onSubmit={handleSubmit} className="sell-card-form">
                     <div className="image-upload-section">
-                        {previewUrl ? (
-                            <div className="image-preview">
-                                <img src={previewUrl} alt="Preview" />
-                                <button type="button" onClick={() => {
-                                    setCardImage(null);
-                                    setPreviewUrl(null);
-                                }}>
-                                    Eliminar imagen
-                                </button>
+                        {images.length ? (
+                            <div className="image-preview-multiple">
+                                {images.map((src, idx) => (
+                                    <div className="thumb" key={idx}>
+                                        <img src={src} alt={`Preview ${idx}`} />
+                                        <button type="button" onClick={() => removeImageAt(idx)}>Eliminar</button>
+                                    </div>
+                                ))}
+                                <div style={{marginTop:10}}>
+                                    <input type="file" accept="image/*" multiple onChange={handleImagesUpload} id="card-images" />
+                                </div>
                             </div>
                         ) : (
                             <div className="upload-placeholder">
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    onChange={handleImageUpload}
-                                    id="card-image"
+                                    multiple
+                                    onChange={handleImagesUpload}
+                                    id="card-images"
                                 />
-                                <label htmlFor="card-image">
-                                    <span>Subir imagen de la carta</span>
+                                <label htmlFor="card-images">
+                                    <span>Subir imagenes de la carta (puedes seleccionar varias)</span>
                                 </label>
                             </div>
                         )}
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="card-name">Nombre de la carta:</label>
+                        <label htmlFor="card-name">Nombre del producto:</label>
                         <input
                             type="text"
                             id="card-name"
@@ -120,6 +168,34 @@ const SellCards = () => {
                             onChange={(e) => setCardName(e.target.value)}
                             required
                         />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="description">Descripción:</label>
+                        <input
+                            type="text"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tipo">Tipo:</label>
+                        <select id="tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                            {TIPOS.map(t => (
+                                <option key={t} value={t}>{t}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="rareza">Rareza:</label>
+                        <select id="rareza" value={rareza} onChange={(e) => setRareza(e.target.value)}>
+                            {RAREZAS.map(r => (
+                                <option key={r} value={r}>{r}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="form-group">
@@ -135,8 +211,19 @@ const SellCards = () => {
                         />
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="stock">Stock:</label>
+                        <input
+                            type="number"
+                            id="stock"
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
+                            min="0"
+                        />
+                    </div>
+
                     <button type="submit" className="submit-button">
-                        Publicar Carta
+                        Publicar Producto
                     </button>
                 </form>
 
@@ -145,11 +232,29 @@ const SellCards = () => {
                     <div className="listings-grid">
                         {activeListings.map(listing => (
                             <div key={listing.id} className="listing-card">
-                                <img src={listing.image} alt={listing.name} />
+                                <div className="listing-carousel">
+                                    {listing.images && listing.images.length ? (
+                                        listing.images.map((src, i) => (
+                                            <img key={i} src={src} alt={`${listing.name} ${i}`} />
+                                        ))
+                                    ) : (
+                                        <div className="no-image">Sin imagen</div>
+                                    )}
+                                </div>
                                 <div className="listing-details">
                                     <h3>{listing.name}</h3>
+                                    <p className="desc">{listing.description}</p>
+                                    <p className="category">Categoría: {listing.category}</p>
+                                    <p className="tipo">Tipo: {listing.tipo}</p>
+                                    <p className="rareza">Rareza: {listing.rareza}</p>
                                     <p className="price">USD ${listing.price}</p>
+                                    <p className="stock">Stock: {listing.stock}</p>
                                     <p className="date">Publicado: {listing.date}</p>
+                                    <div className="listing-actions">
+                                        <button type="button" onClick={() => changeStock(listing.id, 1)}>+</button>
+                                        <button type="button" onClick={() => changeStock(listing.id, -1)}>-</button>
+                                        <button type="button" onClick={() => deleteListing(listing.id)}>Eliminar</button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

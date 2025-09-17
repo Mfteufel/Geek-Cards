@@ -1,0 +1,112 @@
+.card-detail-back-bottom {
+  display: block;
+  margin: 2.5rem auto 0 auto;
+  text-align: center;
+}
+
+.card-detail-container {
+  max-width: 800px;
+  margin: 2.5rem auto;
+  background: #181828;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.18);
+  padding: 2.5rem 2rem;
+  color: #fff;
+  font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+}
+
+.card-detail-back {
+  background: #FF2DAC;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px #FF2DAC44;
+  transition: background 0.2s, transform 0.2s;
+}
+.card-detail-back:hover {
+  background: #e0218a;
+  transform: translateY(-2px);
+}
+
+.card-detail-content {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.card-detail-image {
+  width: 260px;
+  min-width: 180px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px #FF2DAC55;
+  background: #23233a;
+  border: 2px solid #23233a;
+}
+
+.card-detail-info {
+  flex: 1;
+  min-width: 220px;
+  padding-top: 0.5rem;
+}
+.card-detail-info h2 {
+  margin-top: 0;
+  color: #FF2DAC;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.card-detail-info p {
+  font-size: 1.1rem;
+  margin: 0.3rem 0;
+  color: #e0e0e0;
+}
+.card-detail-info strong {
+  color: #00E0FF;
+  font-weight: 600;
+}
+.card-detail-info .card-detail-price {
+  color: #00E0FF;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  display: block;
+}
+.card-detail-info .card-detail-rarity {
+  color: #FF2DAC;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.card-detail-info .card-detail-description {
+  margin-top: 1.2rem;
+  color: #bdbdbd;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.card-detail-error {
+  color: #dc3545;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 700px) {
+  .card-detail-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .card-detail-image {
+    width: 180px;
+  }
+  .card-detail-info h2 {
+    font-size: 1.5rem;
+  }
+}

@@ -8,6 +8,7 @@ import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import MiCuenta from './pages/Profile/MiCuenta'
 import { CarritoProvider } from './context/CarritoContext'
+import CardDetail from './pages/CardDetail/CardDetail';
 import Carrito from './pages/Carrito/Carrito'
 import Checkout from './pages/Checkout/Checkout'
 import RequireLoginModal from "./pages/Auth/RequireLoginModal"
@@ -97,6 +98,7 @@ function App() {
               <Route path="/sell-cards" element={<RequireLoginModal isAuthenticated={isAuthenticated}><SellCards /></RequireLoginModal>} />
               <Route path="/checkout" element={<RequireLoginModal isAuthenticated={isAuthenticated}> <Checkout /></RequireLoginModal>}
               />
+              <Route path="/card/:id" element={<RequireLoginModal isAuthenticated={isAuthenticated}><CardDetail /></RequireLoginModal>} />
             </Routes>
           </main>
           <Footer />

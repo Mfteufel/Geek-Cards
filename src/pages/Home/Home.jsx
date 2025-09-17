@@ -8,10 +8,10 @@ const Home = () => {
   const { agregar } = useCarrito();                          
   // Cartas destacadas para la página de inicio (igual que antes)
   const featuredCards = [
-    { name: 'Dragón de Fuego', type: 'Criatura', rarity: 'Épica',     price: '150.00', image: '/images/cartaPokemon.png' },
-    { name: 'Guerrero Legendario', type: 'Criatura', rarity: 'Legendaria', price: '300.00', image: '/images/cartaPokemon.png' },
-    { name: 'Espada del Destino', type: 'Equipo',   rarity: 'Legendaria', price: '400.00', image: '/images/cartaPokemon.png' },
-    { name: 'Anillo de Poder', type: 'Equipo',     rarity: 'Legendaria', price: '350.00', image: '/images/cartaPokemon.png' },
+    { id: '1', name: 'Dragón de Fuego', type: 'Criatura', rarity: 'Épica',     price: '150.00', image: '/images/cartaPokemon.png' },
+    { id: '2', name: 'Guerrero Legendario', type: 'Criatura', rarity: 'Legendaria', price: '300.00', image: '/images/cartaPokemon.png' },
+    { id: '3', name: 'Espada del Destino', type: 'Equipo',   rarity: 'Legendaria', price: '400.00', image: '/images/cartaPokemon.png' },
+    { id: '4', name: 'Anillo de Poder', type: 'Equipo',     rarity: 'Legendaria', price: '350.00', image: '/images/cartaPokemon.png' },
   ];
 
   const handleAddToCart = (card) => {
