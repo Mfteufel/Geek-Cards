@@ -97,7 +97,7 @@ src/
 ## 👥 Contribuidores
 
 - **Luciano**: Header y navegación
-- **Joaquina**: Componente ProductCard
+- **Marco**: Componente ProductCard
 - **Juan**: Sistema de búsqueda y exploración
 - **WB**: Sistema de autenticación
 
