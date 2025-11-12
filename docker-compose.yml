@@ -1,0 +1,121 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: geekcards_db
+    restart: unless-stopped
+    env_file:
+      - ./Back/.env
+    environment:
+      MYSQL_DATABASE: geekcards
+      MYSQL_USER: ${DB_USER:-geek}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-geekpass}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
+    command:
+      - "--default-authentication-plugin=mysql_native_password"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      geekcards-network:
+        aliases:
+          - db
+    healthcheck:
+      test: ["CMD-SHELL","mysqladmin ping -h 127.0.0.1 -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./Back
+      dockerfile: Dockerfile
+      extra_hosts:
+        - "repo.maven.apache.org:151.101.192.209"
+        - "repo1.maven.org:151.101.192.209"
+    container_name: geekcards_api
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+      - 1.1.1.1
+    restart: unless-stopped
+    env_file:
+      - ./Back/.env
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/geekcards?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-geek}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-geekpass}
+      JWT_SECRET: ${JWT_SECRET:-Z2Vla2NhcmRzLXN1cGVyLXNlY3JldC1rZXktcGxlYXNlLWNoYW5nZQ==}
+      LOGGING_LEVEL_ROOT: ${LOGGING_LEVEL_ROOT:-INFO}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173,http://localhost:4173}
+      CARDS_IMPORT_ON_START: ${CARDS_IMPORT_ON_START:-true}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9090:8080"
+    networks:
+      geekcards-network:
+        aliases:
+          - backend
+
+  frontend:
+    build:
+      context: ./Geek-CardsAPI-Marco
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    container_name: geekcards_frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "4173:80"
+    networks:
+      geekcards-network:
+        aliases:
+          - frontend
+    healthcheck:
+      test: ["CMD-SHELL","wget -qO- http://localhost/healthz | grep -q ok"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: geekcards_pma
+    restart: unless-stopped
+    env_file:
+      - ./Back/.env
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${DB_USER:-geek}
+      PMA_PASSWORD: ${DB_PASSWORD:-geekpass}
+    depends_on:
+      - db
+    ports:
+      - "9081:80"
+    networks:
+      geekcards-network:
+        aliases:
+          - phpmyadmin
+
+volumes:
+  db_data:
+
+networks:
+  geekcards-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "true"
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
