@@ -1,0 +1,51 @@
+### Test de la API de Usuarios
+
+### 1. Verificar que el servidor esté funcionando
+GET http://localhost:8080/api/usuarios
+
+### 2. Registrar un nuevo usuario
+POST http://localhost:8080/api/usuarios/register
+Content-Type: application/json
+
+{
+  "name": "Juan Pérez",
+  "email": "juan@ejemplo.com",
+  "password": "12345678",
+  "passwordConfirm": "12345678"
+}
+
+### 3. Login con el usuario registrado
+POST http://localhost:8080/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "juan@ejemplo.com",
+  "password": "12345678"
+}
+
+### 4. Login con usuario demo
+POST http://localhost:8080/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "demo@geekcards.com",
+  "password": "12345678"
+}
+
+### 5. Verificar si un email existe
+GET http://localhost:8080/api/usuarios/check-email?email=demo@geekcards.com
+
+### 6. Obtener usuario por ID
+GET http://localhost:8080/api/usuarios/1
+
+### 7. Actualizar usuario
+PUT http://localhost:8080/api/usuarios/1
+Content-Type: application/json
+
+{
+  "name": "Usuario Demo Actualizado",
+  "email": "demo@geekcards.com"
+}
+
+### 8. Eliminar usuario (cuidado!)
+DELETE http://localhost:8080/api/usuarios/2
