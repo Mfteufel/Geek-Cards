@@ -100,6 +100,7 @@ src/
 - **Marco**: Componente ProductCard
 - **Juan**: Sistema de búsqueda y exploración
 - **WB**: Sistema de autenticación
+- **
 
 ## 📝 Notas
 
